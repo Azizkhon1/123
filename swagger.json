@@ -1,0 +1,402 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Product API",
+      "description": "API для управления продуктами",
+      "version": "1.0.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/product",
+    "tags": [
+      {
+        "name": "products",
+        "description": "Операции с продуктами"
+      }
+    ],
+    "paths": {
+      "/get-products": {
+        "get": {
+          "tags": ["products"],
+          "summary": "Получить все продукты",
+          "description": "Возвращает все продукты в системе",
+          "responses": {
+            "200": {
+              "description": "Продукты успешно получены",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Продукты успешно получены"
+                  },
+                  "all_products": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/Product"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Ошибка сервера",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Ошибка на сервере"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/get-products/{id}": {
+        "get": {
+          "tags": ["products"],
+          "summary": "Получить один продукт",
+          "description": "Возвращает продукт по заданному ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "ID продукта"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Продукт успешно получен",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Продукт успешно получен"
+                  },
+                  "one_product": {
+                    "$ref": "#/definitions/Product"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Ошибка сервера",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Ошибка на сервере"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/create-products": {
+        "post": {
+          "tags": ["products"],
+          "summary": "Создать новый продукт",
+          "description": "Создает новый продукт в системе",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Продукт успешно создан",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Продукт создан"
+                  },
+                  "newP": {
+                    "$ref": "#/definitions/Product"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Ошибка сервера",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Ошибка на сервере"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/update-products/{id}": {
+        "put": {
+          "tags": ["products"],
+          "summary": "Обновить продукт",
+          "description": "Обновляет продукт по заданному ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "ID продукта"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Продукт успешно обновлен",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Продукт успешно обновлен"
+                  },
+                  "update_product": {
+                    "$ref": "#/definitions/Product"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Ошибка сервера",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Ошибка на сервере"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/delete-products/{id}": {
+        "delete": {
+          "tags": ["products"],
+          "summary": "Удалить продукт",
+          "description": "Удаляет продукт по заданному ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "ID продукта"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Продукт успешно удален",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Продукт удален"
+                  },
+                  "delete_product": {
+                    "$ref": "#/definitions/Product"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Ошибка сервера",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Ошибка на сервере"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/products-filter": {
+        "get": {
+          "tags": ["products"],
+          "summary": "Фильтрация продуктов",
+          "description": "Фильтрует продукты по цвету, цене и категории",
+          "parameters": [
+            {
+              "name": "color",
+              "in": "query",
+              "type": "string",
+              "description": "Цвет продукта"
+            },
+            {
+              "name": "minPrice",
+              "in": "query",
+              "type": "number",
+              "description": "Минимальная цена"
+            },
+            {
+              "name": "maxPrice",
+              "in": "query",
+              "type": "number",
+              "description": "Максимальная цена"
+            },
+            {
+              "name": "category",
+              "in": "query",
+              "type": "string",
+              "description": "Категория продукта"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Продукты отфильтрованы",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Продукты отфильтрованы"
+                  },
+                  "filter_product": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/Product"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Ошибка сервера",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Ошибка на сервере"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/products-list": {
+        "get": {
+          "tags": ["products"],
+          "summary": "Список продуктов с пагинацией",
+          "description": "Возвращает список продуктов с поддержкой пагинации",
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "type": "number",
+              "default": 1,
+              "description": "Номер страницы"
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "type": "number",
+              "default": 2,
+              "description": "Количество продуктов на странице"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Продукты успешно получены",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "2 products"
+                  },
+                  "totalProduct": {
+                    "type": "number",
+                    "example": 10
+                  },
+                  "totalPages": {
+                    "type": "number",
+                    "example": 5
+                  },
+                  "product_list": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/Product"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Ошибка сервера",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Ошибка на сервере"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Product Name"
+          },
+          "description": {
+            "type": "string",
+            "example": "Product Description"
+          },
+          "price": {
+            "type": "number",
+            "example": 100
+          },
+          "color": {
+            "type": "string",
+            "example": "Red"
+          },
+          "category": {
+            "type": "string",
+            "example": "Category Name"
+          }
+        }
+      }
+    }
+  }
+  
