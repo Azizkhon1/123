@@ -30,7 +30,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/product", productRoute);
 app.use("/category", categoryRoute);
-app.use("/auth", authRoute);
+// app.use("/auth", authRoute);
 app.use("/image", express.static(path.join(__dirname, "images")));
 
 app.listen(3000, () => {
